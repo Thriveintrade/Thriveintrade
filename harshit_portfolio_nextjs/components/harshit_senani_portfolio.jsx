@@ -145,18 +145,64 @@ const Panel = ({ children, id }) => <section id={id} className="w-screen h-scree
 
 const PanelContent = ({ children, index, myIndex }) => {
   const isActive = index === myIndex;
-  return <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={isActive ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.98 }} transition={{ duration: 0.2 }}>{children}</motion.div>;
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={
+        isActive
+          ? { opacity: 1, scale: 1 }
+          : { opacity: 0, scale: 0.98 }
+      }
+      transition={{ duration: 0.2 }}
+    >
+      {children}
+    </motion.div>
+  );
+}; // ✅ <-- Missing closing brace added here
 
 const LottieBackground = ({ url, intensity }) => (
-  <Lottie loop animationData={null} play style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: intensity, pointerEvents: 'none' }} path={url} />
+  <Lottie
+    loop
+    animationData={null}
+    play
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      opacity: intensity,
+      pointerEvents: "none",
+    }}
+    path={url}
+  />
 );
 
 const FloatingAvatar = ({ url }) => (
-  <motion.div initial={{ scale: 0.95, y: 10 }} animate={{ y: [0, -10, 0], scale: [0.95, 1, 0.95] }} transition={{ duration: 4, repeat: Infinity }} className="absolute w-40 h-40 rounded-full overflow-hidden border-4 border-green-400">
+  <motion.div
+    initial={{ scale: 0.95, y: 10 }}
+    animate={{ y: [0, -10, 0], scale: [0.95, 1, 0.95] }}
+    transition={{ duration: 4, repeat: Infinity }}
+    className="absolute w-40 h-40 rounded-full overflow-hidden border-4 border-green-400"
+  >
     <Lottie loop animationData={null} play path={url} />
   </motion.div>
 );
 
 const GreenAnimatedLottie = ({ url }) => (
-  <Lottie loop animationData={null} play style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', opacity: 0.4 }} path={url} />
+  <Lottie
+    loop
+    animationData={null}
+    play
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      pointerEvents: "none",
+      opacity: 0.4,
+    }}
+    path={url}
+  />
 );
