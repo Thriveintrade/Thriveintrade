@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harshit Senani — Portfolio</title>
+<style>
+:root{
+  --bg:#0a0a0a;--panel:#111;--text:#e5e7eb;--muted:#9ca3af;--green:#00ff88;
+}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,sans-serif;
+  overflow-x:hidden;
+  position:relative;
+}
+#bgCanvas{
+  position:fixed;
+  top:0;left:0;
+  width:100vw;
+  height:100vh;
+  z-index:-1;
+  background:transparent !important;
+  pointer-events:none;
+}
+
+/* ===== NAVBAR ===== */
+.nav{
+  position:fixed;
+  top:12px;left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:20px;
+  background:rgba(17,17,17,.85);
+  border:1px solid rgba(0,255,136,.2);
+  border-radius:999px;
+  padding:10px 20px;
+  backdrop-filter:blur(8px);
+  z-index:100;
+}
+.nav a{
+  text-decoration:none;
+  color:var(--muted);
+  transition:.3s;
+}
+.nav a:hover,.nav a.active{color:var(--green);}
+
+/* ===== SECTIONS ===== */
+section {
+  padding: 100px 20px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(100px) scale(0.97);
+  transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1),
+              transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform, opacity;
+}
+section.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* staggered child elements animation */
+section.visible h2,
+section.visible h1,
+section.visible p,
+section.visible img,
+section.visible .service-card,
+section.visible form,
+section.visible a {
+  animation: fadeUp 0.9s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+section.visible h2 { animation-delay: 0.1s; }
+section.visible img { animation-delay: 0.25s; }
+section.visible p, section.visible .service-card { animation-delay: 0.35s; }
+section.visible form, section.visible a { animation-delay: 0.45s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2{color:var(--green);margin-bottom:16px;}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding-top:80px;
+}
+.hero h1{font-size:2.4rem;color:var(--green);margin-bottom:10px;}
+.hero p{max-width:640px;color:var(--muted);margin-top:6px;}
+.hero img{
+  width:min(40vw,200px);
+  margin-top:24px;
+  filter:drop-shadow(0 0 15px rgba(0,255,136,.3));
+  transition:.4s;
+}
+.hero img:hover{transform:translateY(-6px);filter:drop-shadow(0 10px 25px rgba(0,255,136,.45));}
+
+/* ===== ABOUT ===== */
+.about{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.about img{
+  width:240px;
+  height:auto;
+  margin:20px auto;
+  display:block;
+  border-radius:16px;
+  filter:drop-shadow(0 0 15px rgba(0,255,136,.25));
+  transition:.4s;
+}
+.about img:hover{transform:translateY(-4px);filter:drop-shadow(0 10px 25px rgba(0,255,136,.35));}
+.about p{
+  max-width:800px;
+  margin:10px auto;
+  color:var(--muted);
+  text-align:center;
+}
+
+/* ===== SERVICES ===== */
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  max-width:1000px;
+  margin:0 auto;
+  justify-items:center;
+}
+.service-card{
+  background:var(--panel);
+  border:1px solid rgba(0,255,136,.2);
+  border-radius:16px;
+  padding:24px;
+  max-width:300px;
+  transition:.3s;
+}
+.service-card:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px rgba(0,255,136,.2);
+}
+
+/* ===== CONTACT ===== */
+.contact form{
+  max-width:600px;margin:0 auto;
+  display:flex;flex-direction:column;gap:12px;
+}
+input,textarea{
+  background:#0f0f0f;
+  border:1px solid rgba(0,255,136,.2);
+  border-radius:10px;
+  color:var(--text);
+  padding:12px;
+}
+.btn{
+  background:var(--green);
+  color:#000;
+  font-weight:600;
+  padding:12px 18px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+.whatsapp-btn{
+  display:inline-block;
+  background:var(--green);
+  color:#000;
+  font-weight:bold;
+  padding:12px 22px;
+  border-radius:12px;
+  text-decoration:none;
+  margin-top:20px;
+  transition:.3s;
+}
+.whatsapp-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(0,255,136,.3);
+}
+footer{
+  padding:40px 20px;
+  text-align:center;
+  color:var(--muted);
+  border-top:1px solid rgba(0,255,136,.1);
+  margin-top:40px;
+}
+@media(max-width:768px){
+  section{padding:80px 16px;}
+  .hero img{width:160px;}
+  .about img{width:180px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<nav class="nav">
+  <a href="#hero">Home</a>
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section id="hero" class="hero visible">
+  <h1>Harshit Senani</h1>
+  <p>Web Developer • SEO Specialist • Digital Marketer</p>
+  <p>Building fast, elegant, and high-converting digital experiences.</p>
+  <img src="avatar1.png" alt="Harshit Avatar">
+</section>
+
+<section id="about" class="about">
+  <h2>About Me</h2>
+  <img src="avatar2.png" alt="About Avatar">
+  <p>
+    I'm a passionate Web Developer and Digital Marketer with 5+ years of experience.
+    I build SEO-optimized, high-performance websites and marketing strategies that drive measurable growth.
+  </p>
+</section>
+
+<section id="services" class="services">
+  <h2>What I Do</h2>
+  <div class="services-grid">
+    <div class="service-card"><h3>💻 Web Development</h3><p>Fast, responsive websites with modern tools.</p></div>
+    <div class="service-card"><h3>🔍 SEO Optimization</h3><p>Strategies that increase rankings & traffic.</p></div>
+    <div class="service-card"><h3>📈 Performance Marketing</h3><p>Campaigns built for conversion & growth.</p></div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <h2>Get In Touch</h2>
+  <form>
+    <input type="text" placeholder="Your Name">
+    <input type="email" placeholder="Your Email">
+    <textarea rows="4" placeholder="Your Message"></textarea>
+    <button type="button" class="btn">Send Message</button>
+  </form>
+  <a href="https://wa.me/919928093641" target="_blank" class="whatsapp-btn">💬 Connect via WhatsApp</a>
+</section>
+
+<footer>© <span id="year"></span> Harshit Senani. All Rights Reserved.</footer>
+
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+
+/* ===== BACKGROUND ANIMATION ===== */
+const canvas=document.getElementById("bgCanvas");
+const ctx=canvas.getContext("2d");
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+resize();window.addEventListener("resize",resize);
+
+const dots=Array.from({length:80},()=>({
+  x:Math.random()*innerWidth,
+  y:Math.random()*innerHeight,
+  r:Math.random()*2+1,
+  dx:(Math.random()-0.5)*0.5,
+  dy:(Math.random()-0.5)*0.5
+}));
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<dots.length;i++){
+    const p=dots[i];
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,255,136,0.5)";
+    ctx.fill();
+    for(let j=i+1;j<dots.length;j++){
+      const q=dots[j];
+      const dx=p.x-q.x,dy=p.y-q.y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){
+        ctx.strokeStyle=`rgba(0,255,136,${0.08*(1-dist/120)})`;
+        ctx.beginPath();
+        ctx.moveTo(p.x,p.y);
+        ctx.lineTo(q.x,q.y);
+        ctx.stroke();
+      }
+    }
+    p.x+=p.dx;p.y+=p.dy;
+    if(p.x<0||p.x>innerWidth)p.dx*=-1;
+    if(p.y<0||p.y>innerHeight)p.dy*=-1;
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ===== SECTION REVEAL ON SCROLL ===== */
+const sections=document.querySelectorAll("section");
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:0.25});
+sections.forEach(section=>observer.observe(section));
+
+/* ===== ANIMATE ON NAV CLICK ===== */
+document.querySelectorAll('.nav a').forEach(link=>{
+  link.addEventListener('click',()=>{
+    const target=document.querySelector(link.getAttribute('href'));
+    if(target){
+      target.classList.remove('visible');
+      setTimeout(()=>target.classList.add('visible'),200);
+    }
+  });
+});
+</script>
+</body>
+</html>
